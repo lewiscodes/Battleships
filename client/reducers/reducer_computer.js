@@ -1,4 +1,4 @@
-import { INIT_COMPUTER_SHIPS, ADD_SHIP } from '../actions/index';
+import { INIT_COMPUTER_SHIPS, ADD_SHIP } from '../actions/computer';
 
 const buildBoard = () => {
     let board = {};

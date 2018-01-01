@@ -7,7 +7,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import cx from 'classnames';
-
+import { setBlockSize } from '../../actions/meta';
 import BlockComponent from './block';
 
 require('./sass/block.scss');
@@ -34,8 +34,7 @@ class Block extends Component {
             'block--containsShip': this.props.containsShip && this.props.type === "computer"
         });
 
-        const heightWidth = (((this.props.width / 100) * 45) / 11);
-        const styles = { width: heightWidth, height: heightWidth}
+        const styles = { width: this.props.blockSize, height: this.props.blockSize}
         const textToDisplay = this.props.containsShip ? this.props.shipID : null;
 
         return (
@@ -52,11 +51,11 @@ class Block extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ }, dispatch)
+    return bindActionCreators({ setBlockSize }, dispatch)
 }
 
 function mapStateToProps(state) {
-    return { width: state.meta.width }
+    return { width: state.meta.width, blockSize: state.meta.blockSize }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Block);

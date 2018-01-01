@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux';
 import PlayerBoard from './playerBoard';
 import ComputerBoard from './computerBoard';
 import Title from '../components/title/container'
-import { setWidth, initialiseComputerShips } from '../actions/index';
+// import Deck from '../components/deck/container'
+import { setWidth, setBlockSize } from '../actions/meta';
+import { initialiseComputerShips } from '../actions/computer';
 
 require('./sass/main.scss');
 
@@ -12,6 +14,7 @@ class Main extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.props.setWidth.bind(this));
+        window.addEventListener('resize', this.props.setBlockSize.bind(this));
         this.props.initialiseComputerShips();
     }
 
@@ -35,7 +38,7 @@ class Main extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setWidth, initialiseComputerShips }, dispatch)
+    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips }, dispatch)
 }
 
 function mapStateToProps(state) {
