@@ -1,0 +1,12 @@
+.block {
+    border: 1px solid black;
+    float: left;
+
+    &--hover {
+        background-color: red;
+    }
+
+    &--containsShip {
+        background-color: blue;
+    }
+}

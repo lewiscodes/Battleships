@@ -1,0 +1,13 @@
+.main {
+    margin-top: 1em;
+
+    .boardContainer {
+        display: flex;
+
+        .player, .computer {
+            display: inline-block;
+            width: 45%;
+            margin: 1em;
+        }
+    }
+}

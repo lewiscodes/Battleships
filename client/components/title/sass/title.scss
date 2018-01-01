@@ -1,0 +1,13 @@
+.title {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-bottom: 0.5em;
+
+    &--header {
+        font-size: 3em;
+    }
+
+    &--subheader {
+        font-size: 2em;
+    }
+}
