@@ -15,7 +15,7 @@ class Main extends Component {
     componentDidMount() {
         window.addEventListener('resize', this.props.setWidth.bind(this));
         window.addEventListener('resize', this.props.setBlockSize.bind(this));
-        this.props.initialiseComputerShips();
+        this.props.initialiseComputerShips(this.props.computerShips);
     }
 
     render() {
@@ -42,7 +42,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return { }
+    return { computerShips: state.computer.ships }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

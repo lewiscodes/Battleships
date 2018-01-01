@@ -10,7 +10,16 @@ const buildBoard = () => {
     return board;
 }
 
-const INITIAL_STATE = { board: buildBoard(), ships: {} };
+const INITIAL_STATE = {
+                        board: buildBoard(),
+                        ships: {
+                            1: {shipLength: 5},
+                            2: {shipLength: 4},
+                            3: {shipLength: 3},
+                            4: {shipLength: 3},
+                            5: {shipLength: 2}
+                        }
+                    };
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
