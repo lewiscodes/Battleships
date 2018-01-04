@@ -39,7 +39,7 @@ const INITIAL_STATE = {
         // ---------------------------------------------------------
         // set number of hits back to 0 and empty hitBlocks on ship1
         // ---------------------------------------------------------
-        1: {shipLength: 5, numberOfHits: 1, hitBlocks: [1], sunk: false},
+        1: {shipLength: 5, numberOfHits: 0, hitBlocks: [], sunk: false},
         2: {shipLength: 4, numberOfHits: 0, hitBlocks: [], sunk: false},
         3: {shipLength: 3, numberOfHits: 0, hitBlocks: [], sunk: false},
         4: {shipLength: 3, numberOfHits: 0, hitBlocks: [], sunk: false},

@@ -134,50 +134,117 @@ function tryToFindExistingShip(currentPlayerBoard, playersCurrentShips) {
     let hitShip = null;
     for (let x=0; x < Object.keys(playersCurrentShips).length; x++) {
         const ship = playersCurrentShips[x+1];
-        if (ship.hitBlocks.length > 0 && !ship.sunk) {
+        if (ship.hitBlocks.length > 0 && !ship.sunk) {            
             hitShip = ship;
         }
     }
 
-    console.log(hitShip);
-
+    let guess = null;
+    // check to see if a direction of ship placement has already been determined
+    // (i.e. if there is more than one hit on a ship, if there has been more than one hit, you can work out whether the ship is player horizontally or vertically)
     if (hitShip.hitBlocks.length === 1) {
-        let guess = null;
         while (guess === null) {
-            // 1 = up, 2 = left, 3 = right, 4 = down
-            const randomDirection = Math.floor( Math.random() * 4 );
+            // 0 = up, 1 = down, 2 = right, 3 = left
+            const randomDirection = Math.floor( Math.random() * 5 );
+                        
             let guessAttempt = null;
-            if (randomDirection === 1) {
+            if (randomDirection === 0) {
+                guessAttempt = hitShip.hitBlocks[0] - 10;
+            } else if (randomDirection === 1) {
                 guessAttempt = hitShip.hitBlocks[0] + 10;
             } else if (randomDirection === 2) {
-                guessAttempt = hitShip.hitBlocks[0] - 1;
-            } else if (randomDirection === 3) {
-                guessAttempt = hitShip.hitBlocks[0] + -10;
-            } else {
                 guessAttempt = hitShip.hitBlocks[0] + 1;
+            } else {
+                guessAttempt = hitShip.hitBlocks[0] - 1;
             }
 
             if (doesGuessFitOnTheBoard(hitShip.hitBlocks[0], guessAttempt)) {
-                guess = guessAttempt;
+                if (!currentPlayerBoard[guessAttempt].targeted) {
+                    guess = guessAttempt;
+                }
             }
-
-            guess = 3;
         }
     } else {
         // calculate which direction to go (up and down or left and right)
+        const hitBlocks = hitShip.hitBlocks.sort()
+        while (guess === null) {
+            const firstHitBlock = hitBlocks[0];
+            const secondHitBlock = hitBlocks[1];
+            if ((firstHitBlock + 1 === secondHitBlock) || (firstHitBlock - 1 === secondHitBlock)) {
+                // ship is horizontal
+                // 2 = right, 3 = left
+                const randomDirection = (Math.floor( Math.random() * 2 ) + 2);
+                let guessAttempt = null;
+                if (randomDirection === 2) {
+                    // get furthest right hit (highest number hit) and add 1 to it.
+                    guessAttempt = hitBlocks[hitBlocks.length-1] + 1;
+
+                    if (doesGuessFitOnTheBoard(hitBlocks[hitBlocks.length-1], guessAttempt)) {
+                        if (!currentPlayerBoard[guessAttempt].targeted) {
+                            guess = guessAttempt
+                        }
+                    }
+                } else {
+                    // get furthest left hit (lowest number) and take 1 from it.
+                    guessAttempt = hitBlocks[0] - 1;
+
+                    if (doesGuessFitOnTheBoard(hitBlocks[0], guessAttempt)) {
+                        if (!currentPlayerBoard[guessAttempt].targeted) {
+                            guess = guessAttempt
+                        }
+                    }
+                }
+            } else if ((firstHitBlock + 10 === secondHitBlock) || (firstHitBlock - 10 === secondHitBlock)) {
+                // ship is vertical
+                // 0 = up, 1 = down
+                const randomDirection = Math.floor( Math.random() * 2 );
+                let guessAttempt = null;
+                if (randomDirection === 0) {
+                    // get the furthest up hit (lowest number) and take 10 from it.
+                    guessAttempt = hitBlocks[0] - 10;
+                    if (doesGuessFitOnTheBoard(hitBlocks[0], guessAttempt)) {
+                        if (!currentPlayerBoard[guessAttempt].targeted) {
+                            guess = guessAttempt
+                        }
+                    }
+
+                } else {
+                    // get the furthest down hit (highest number) and add 10 from it.
+                    guessAttempt = hitBlocks[hitBlocks.length-1] + 10;
+                    if (doesGuessFitOnTheBoard(hitBlocks[hitBlocks.length-1], guessAttempt)) {
+                        if (!currentPlayerBoard[guessAttempt].targeted) {
+                            guess = guessAttempt
+                        }
+                    }
+                }
+            } else {
+                // something has gone wrong, make a random guess
+                guessAttempt = Math.floor( Math.random() * 99 )
+                if (!currentPlayerBoard[guessAttempt].targeted) {
+                    guess = guessAttempt
+                }
+            }
+        }
     }
 
-
-    
-    
-    return 2
+    return guess
 }
 
 function doesGuessFitOnTheBoard(originalBlock, guess) {
-    console.log(originalBlock);
-    console.log(guess);
-
-    if () {
+    // checks to see if the guess is too low or too high for the board.
+    if (guess < 0 || guess > 99) {
         return false;
     }
+
+    // checks to see if the guess has moved to the next line if the original block is on the far right of the boatrd.
+    if ((originalBlock === 9 && guess === 10) || (guess % 10 === 0 && originalBlock.toString().charAt(1) === "9")) {
+        return false;
+    }
+
+    // checks to see if the guess has moved to the previous line if the original block is on the far left of the boatrd.
+    if (originalBlock % 10 === 0 && (guess === 9 || guess.toString().charAt(1) === "9")) {
+        return false;
+    }
+
+    return true;
 }
