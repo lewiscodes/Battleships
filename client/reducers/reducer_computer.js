@@ -1,4 +1,4 @@
-import { INIT_COMPUTER_SHIPS, ADD_SHIP } from '../actions/computer';
+import { INIT_COMPUTER_SHIPS, ADD_SHIP, MAKE_GUESS } from '../actions/computer';
 
 const buildBoard = () => {
     let board = {};
@@ -13,11 +13,11 @@ const buildBoard = () => {
 const INITIAL_STATE = {
                         board: buildBoard(),
                         ships: {
-                            1: {shipLength: 5},
-                            2: {shipLength: 4},
-                            3: {shipLength: 3},
-                            4: {shipLength: 3},
-                            5: {shipLength: 2}
+                            1: {shipLength: 5, numberOfHits: 0, hitBlocks: [1], sunk: false},
+                            2: {shipLength: 4, numberOfHits: 0, hitBlocks: [], sunk: false},
+                            3: {shipLength: 3, numberOfHits: 0, hitBlocks: [], sunk: false},
+                            4: {shipLength: 3, numberOfHits: 0, hitBlocks: [], sunk: false},
+                            5: {shipLength: 2, numberOfHits: 0, hitBlocks: [], sunk: false}
                         }
                     };
 

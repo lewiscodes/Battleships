@@ -6,6 +6,7 @@ Built using React.JS and Redux.
 
 FUTURE ENHANCEMENTS
 * i like the idea of the theme styling to look like it has been drawn with a pencil. Investigate the posibility of this (e.g. https://balsamiq.com/)
+* make a notification to show the computer guessing, what they guessed and if it was successful or not
 * intercept a page refresh to make sure the user doesn't lose their game progress.
 
 KNOWN BUGS

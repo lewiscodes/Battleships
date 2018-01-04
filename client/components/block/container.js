@@ -31,7 +31,9 @@ class Block extends Component {
             'block': true,
             [`block--style-${this.props.style}`]: this.props.style !== undefined,
             'block--hover': this.state.hovering && this.props.type === "computer",
-            'block--containsShip': this.props.containsShip && this.props.type === "computer"
+            'block--containsShip': this.props.containsShip,
+            'block--targeted': this.props.targeted && !this.props.containsShip,
+            'block--targeted-hit': this.props.targeted && this.props.containsShip
         });
 
         const styles = { width: this.props.blockSize, height: this.props.blockSize}

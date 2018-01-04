@@ -3,10 +3,18 @@
     float: left;
 
     &--hover {
-        background-color: red;
+        background-color: black;
     }
 
     &--containsShip {
         background-color: blue;
+    }
+
+    &--targeted {
+        background-color: green;
+
+        &-hit {
+            background-color: red;
+        }
     }
 }
