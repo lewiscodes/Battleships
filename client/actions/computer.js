@@ -88,20 +88,11 @@ function randomlyPlaceShip(shipLength, ships) {
 
 export function makeGuess(currentPlayerBoard, playersCurrentShips) {
     let guess = 0;
-    console.log("computer is making a guess");
     if (hasAShipBeenHitButNotSunk(playersCurrentShips)) {
-        console.log("existing hit detected");
         guess = tryToFindExistingShip(currentPlayerBoard, playersCurrentShips)
     } else {
-        console.log("no existing hit detected");
         guess = makeNewGuess(currentPlayerBoard);
-        // ------------------
-        // hard coded a guess
-        guess = 1;
-        // ------------------
     }
-
-    console.log("guess is: ", guess);
 
     return {
         type: MAKE_GUESS,
