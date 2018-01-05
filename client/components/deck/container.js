@@ -30,11 +30,13 @@ class Deck extends Component {
 
             const classes = cx({
                 'ship': true,
-                'ship--selected': this.props.ships[shipIndex].selected
+                'ship--selected': this.props.ships[shipIndex].selected,
+                'ship--placed': this.props.ships[shipIndex].placed
             });
 
             const shipProps = {
                 className: classes,
+                key: shipIndex,
                 onClick: () => {this.shipClickHandler(shipIndex)}
             };
 
