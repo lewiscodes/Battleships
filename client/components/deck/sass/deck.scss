@@ -1,0 +1,22 @@
+.ships {
+    display: inline-block;
+
+    .ship {
+        display: inline-block;
+        margin: 0 15px;
+
+        &--selected {
+            .block {
+                border: 2px solid green;
+            }
+        }
+    }
+}
+
+.rotate {
+    display: inline-block;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

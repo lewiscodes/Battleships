@@ -5,6 +5,7 @@ export default (props) => {
         <div>
             <h2>{props.title}</h2>
             {props.playerShips}
+            {props.rotateButton}
         </div>
     );
 }

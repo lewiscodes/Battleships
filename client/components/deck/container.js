@@ -5,23 +5,41 @@ import cx from 'classnames';
 
 import DeckComponent from './deck';
 import Block from '../block/container';
+import { selectShip, toggleShipRotation } from '../../actions/player';
 
 require('./sass/deck.scss');
 
 class Deck extends Component {
 
+    state = {
+        selectedShip: null
+    }
+
+    shipClickHandler = (shipIndex) => {
+        this.props.selectShip(shipIndex);
+        this.setState({selectedShip: shipIndex});
+    }
+
     renderPlayerShips = () => {
         const { ships } = this.props;
-        // let playerShips = [];
-        const playerShips = React.createElement("div", Object.keys(ships).map((shipIndex) => {
+        const playerShips = React.createElement("div", {className: "ships"}, Object.keys(ships).map((shipIndex) => {
             let ship = [];
             for (let x=0; x<ships[shipIndex].shipLength; x++) {
                 ship.push(<Block key={shipIndex.toString + x}/>);
             }
 
-            // playerShips.push(React.createElement("div", ship));
-            return React.createElement("div", ship)
-        }))
+            const classes = cx({
+                'ship': true,
+                'ship--selected': this.props.ships[shipIndex].selected
+            });
+
+            const shipProps = {
+                className: classes,
+                onClick: () => {this.shipClickHandler(shipIndex)}
+            };
+
+            return React.createElement("div", shipProps, ship);
+        }));
 
         return playerShips;
     };
@@ -34,12 +52,18 @@ class Deck extends Component {
 
         const title = "Click on a ship to select it, and place it on the board. Click the rotate button to rotate the ship.";
         const playerShips = this.renderPlayerShips();
+        const rotateButtonProps = {
+            className: 'rotate',
+            onClick: () => {this.props.toggleShipRotation(this.state.selectedShip)}
+        };
+        const rotateButton = React.createElement('div', rotateButtonProps, 'rotate');
 
         return (
             <DeckComponent
                 classes={classes}
                 title={title}
                 playerShips={playerShips}
+                rotateButton={rotateButton}
                 {...this.props}
             />
         )
@@ -47,7 +71,7 @@ class Deck extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ }, dispatch)
+    return bindActionCreators({ selectShip, toggleShipRotation }, dispatch)
 }
 
 function mapStateToProps(state) {
