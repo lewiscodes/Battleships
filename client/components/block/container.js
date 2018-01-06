@@ -19,12 +19,20 @@ class Block extends Component {
     }
 
     mouseEnterEventHandler = () => {
-        this.setState({hovering: true})
-    }
+        this.setState({hovering: true});
+
+        if (this.props.type === 'player') {
+            this.props.blockMouseEnter(this.props.id);
+        }
+    };
 
     mouseLeaveEventHandler = () => {
-        this.setState({hovering: false})
-    }
+        this.setState({hovering: false});
+
+        if (this.props.type === 'player') {
+            this.props.blockMouseLeave(this.props.id);
+        }
+    };
 
     render () {
         const classes = cx({
@@ -33,7 +41,9 @@ class Block extends Component {
             'block--hover': this.state.hovering && this.props.type === "computer",
             'block--containsShip': this.props.containsShip,
             'block--targeted': this.props.targeted && !this.props.containsShip,
-            'block--targeted-hit': this.props.targeted && this.props.containsShip
+            'block--targeted-hit': this.props.targeted && this.props.containsShip,
+            'block--selected': this.props.isSelected || this.props.isSelected === 0,
+            'block--selected-error': this.props.isSelected && this.props.isSelectedError
         });
 
         const styles = { width: this.props.blockSize, height: this.props.blockSize}
@@ -48,8 +58,8 @@ class Block extends Component {
                 text={textToDisplay}
                 {...this.props}
             />
-        )
-    }
+        );
+    };
 }
 
 function mapDispatchToProps(dispatch) {

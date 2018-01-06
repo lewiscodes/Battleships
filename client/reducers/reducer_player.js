@@ -5,30 +5,7 @@ const buildBoard = () => {
     let board = {};
 
     for (let x=0; x<100; x++) {
-        // --------------------------------------------------------------------------------------------------
-        // this is just to add dummy player ships, it can be removed once the player can add their own ships.
-        // --------------------------------------------------------------------------------------------------
-        let containsShipIndicator = false;
-        let thisShipId = null;
-        if (x==0||x==1||x==2||x==3||x==4||x==56||x==57||x==58||x==59||x==71||x==72||x==72||x==20||x==30||x==40||x==88||x==98) {
-            containsShipIndicator = true;
-            if (x==0||x==1||x==2||x==3||x==4) {
-                thisShipId = 1;
-            } else if (x==56||x==57||x==58||x==59) {
-                thisShipId = 2;
-            } else if (x==71||x==72||x==72) {
-                thisShipId = 3;
-            } else if (x==20||x==30||x==40) {
-                thisShipId = 4;
-            } else if (x==88||x==98) {
-                thisShipId = 5;
-            }
-        }
-        board[x] = {id: x, containsShip: containsShipIndicator, targeted: false, shipId: thisShipId};
-        // ---------------------------------------------------------------
-        // this can be re-instated once the player can add their own ships.
-        // board[x] = {id: x, containsShip: false, targeted: false};
-        // ---------------------------------------------------------------
+        board[x] = {id: x, containsShip: false, targeted: false};
     }
 
     return board;

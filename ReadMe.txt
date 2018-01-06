@@ -5,9 +5,10 @@ TECHNICAL SUMMARY
 Built using React.JS and Redux.
 
 FUTURE ENHANCEMENTS
-* i like the idea of the theme styling to look like it has been drawn with a pencil. Investigate the posibility of this (e.g. https://balsamiq.com/)
+* replace intricate javascript with lodash functions where possible.
 * make a notification to show the computer guessing, what they guessed and if it was successful or not
 * intercept a page refresh to make sure the user doesn't lose their game progress.
+* i like the idea of the theme styling to look like it has been drawn with a pencil. Investigate the posibility of this (e.g. https://balsamiq.com/)
 
 KNOWN BUGS
 * boards take up too much height at desktop widths
