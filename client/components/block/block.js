@@ -7,6 +7,7 @@ export default (props) => {
             style={props.styles}
             onMouseEnter={props.mouseEnterEventHandler}
             onMouseLeave={props.mouseLeaveEventHandler}
+            onClick={props.placeShipAttempt}
         >{props.text}</div>
     );
 }

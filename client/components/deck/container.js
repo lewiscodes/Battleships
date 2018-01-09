@@ -16,8 +16,10 @@ class Deck extends Component {
     }
 
     shipClickHandler = (shipIndex) => {
-        this.props.selectShip(shipIndex);
-        this.setState({selectedShip: shipIndex});
+        if (!this.props.ships[shipIndex].placed) {
+            this.props.selectShip(shipIndex);
+            this.setState({selectedShip: shipIndex});
+        }
     }
 
     renderPlayerShips = () => {

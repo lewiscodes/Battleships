@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { placeShip } from '../actions/player';
 import _ from 'lodash';
 
 import Block from '../components/block/container';
@@ -20,6 +21,12 @@ class PlayerBoard extends Component {
     blockMouseLeave = (blockID) => {
         this.setState({currentlyHoveredOverBlock: null});
     };
+
+    placeShipAttempt = (selectedBlocks, selectedShip) => {
+        if (selectedShip &&selectedBlocks.length === selectedShip.shipLength) {
+            this.props.placeShip(selectedShip.Id, selectedBlocks)
+        }
+    }
 
     setSelectedBlocksOnHover = (selectedShip) => {
         // this is used to highlight where the player is trying to place the selected ship on the player board.
@@ -76,6 +83,7 @@ class PlayerBoard extends Component {
                     blockMouseLeave={this.blockMouseLeave}
                     isSelected={_.find(selectedBlocks, function(selectedBlock) {return board[block].id === selectedBlock})}
                     isSelectedError={isSelectedError}
+                    placeShipAttempt={() => {this.placeShipAttempt(selectedBlocks, selectedShip)}}
                 />
             );
         });
@@ -91,7 +99,7 @@ class PlayerBoard extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({  }, dispatch)
+    return bindActionCreators({ placeShip }, dispatch)
 }
 
 function mapStateToProps(state) {
