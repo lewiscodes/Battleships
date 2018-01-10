@@ -26,15 +26,22 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case MAKE_GUESS:
-        let newState_makeGuess = {...state.board};
-        newState_makeGuess[action.payload].targeted = true;
+        let newState_makeGuess_board = {...state.board};
+        let newState_makeGuess_ships = {...state.ships};
+        newState_makeGuess_board[action.payload].targeted = true;
 
-        if (newState_makeGuess[action.payload].shipId !== null) {
-            // -----------------------------------------------------------------------
-            // call another action to update the ship with a hit and sink if necessary
-            // -----------------------------------------------------------------------
+        const shipID = newState_makeGuess_board[action.payload].shipId;
+        console.log(shipID);
+        
+        if (shipID !== undefined) {
+            newState_makeGuess_ships[shipID].numberOfHits++;
+            newState_makeGuess_ships[shipID].hitBlocks.push(action.payload);
+
+            if (newState_makeGuess_ships[shipID].numberOfHits === newState_makeGuess_ships[shipID].shipLength) {
+                newState_makeGuess_ships[shipID].sunk = false;
+            }
         }
-        return {...state, board: newState_makeGuess};
+        return {...state, board: newState_makeGuess_board, ships: newState_makeGuess_ships};
     case SELECT_SHIP:
         let newState_selectShip = {...state.ships};
         for (let x=0; x<Object.keys(newState_selectShip).length; x++) {

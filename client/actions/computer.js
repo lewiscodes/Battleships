@@ -1,3 +1,5 @@
+import { setTurn } from './meta';
+
 export const INIT_COMPUTER_SHIPS = "INIT_COMPUTER_SHIPS";
 export const ADD_SHIP = "ADD_SHIP";
 export const MAKE_GUESS = "MAKE_GUESS";
@@ -86,17 +88,21 @@ function randomlyPlaceShip(shipLength, ships) {
     }
 }
 
-export function makeGuess(currentPlayerBoard, playersCurrentShips) {
-    let guess = 0;
-    if (hasAShipBeenHitButNotSunk(playersCurrentShips)) {
-        guess = tryToFindExistingShip(currentPlayerBoard, playersCurrentShips)
-    } else {
-        guess = makeNewGuess(currentPlayerBoard);
-    }
+export function computerMakeGuess(currentPlayerBoard, playersCurrentShips) {
+    return (dispatch) => {
+        let guess = 0;
+        if (hasAShipBeenHitButNotSunk(playersCurrentShips)) {
+            guess = tryToFindExistingShip(currentPlayerBoard, playersCurrentShips)
+        } else {
+            guess = makeNewGuess(currentPlayerBoard);
+        }
 
-    return {
-        type: MAKE_GUESS,
-        payload: guess
+        dispatch ({
+            type: MAKE_GUESS,
+            payload: guess
+        });
+
+        dispatch(setTurn("player"));
     };
 }
 

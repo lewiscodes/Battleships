@@ -7,7 +7,7 @@ import ComputerBoard from './computerBoard';
 import Title from '../components/title/container'
 import Deck from '../components/deck/container'
 import { setWidth, setBlockSize } from '../actions/meta';
-import { initialiseComputerShips, makeGuess } from '../actions/computer';
+import { initialiseComputerShips, computerMakeGuess } from '../actions/computer';
 
 require('./sass/main.scss');
 
@@ -29,7 +29,7 @@ class Main extends Component {
             } else {
                 if (this.props.currentTurn === 'computer') {
                     // it is the computers turn
-                    this.props.makeGuess(this.props.playerBoard, this.props.playerShips);
+                    this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips);
                 } else {
                     // itis the players turn.
                     // display a notification indicating that it is the players go.
@@ -44,7 +44,7 @@ class Main extends Component {
         console.log(flipCoin);
 
         if (flipCoin === 0) {
-            this.props.makeGuess(this.props.playerBoard, this.props.playerShips);
+            this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips);
         } else {
             // display a notification indicating that it is the players go.
         }
@@ -71,7 +71,7 @@ class Main extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips, makeGuess }, dispatch)
+    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips, computerMakeGuess }, dispatch)
 }
 
 function mapStateToProps(state) {
