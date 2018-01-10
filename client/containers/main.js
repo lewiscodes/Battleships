@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 import PlayerBoard from './playerBoard';
 import ComputerBoard from './computerBoard';
 import Title from '../components/title/container'
@@ -16,7 +17,37 @@ class Main extends Component {
         window.addEventListener('resize', this.props.setWidth.bind(this));
         window.addEventListener('resize', this.props.setBlockSize.bind(this));
         this.props.initialiseComputerShips(this.props.computerShips);
-        // this.props.makeGuess(this.props.playerBoard, this.props.playerShips);
+    }
+
+    componentDidUpdate() {
+        const gameReady = _.find(this.props.playerShips, (ship) => {return !ship.placed});        
+        // gameReady = undefined indicates that there are no ships left for the placer to place on the board.
+        if (gameReady === undefined) {
+            if (this.props.currentTurn === null) {
+                // this kicks off the first turn of the game
+                this.initialiseFirstGo();
+            } else {
+                if (this.props.currentTurn === 'computer') {
+                    // it is the computers turn
+                    this.props.makeGuess(this.props.playerBoard, this.props.playerShips);
+                } else {
+                    // itis the players turn.
+                    // display a notification indicating that it is the players go.
+                }
+            }
+        }
+    }
+
+    initialiseFirstGo() {
+        // 0 = computer, 1 = player
+        let flipCoin = Math.floor( Math.random() * 2);
+        console.log(flipCoin);
+
+        if (flipCoin === 0) {
+            this.props.makeGuess(this.props.playerBoard, this.props.playerShips);
+        } else {
+            // display a notification indicating that it is the players go.
+        }
     }
 
     render() {
@@ -44,7 +75,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return { computerShips: state.computer.ships, playerBoard: state.player.board, playerShips: state.player.ships }
+    return { computerShips: state.computer.ships, playerBoard: state.player.board, playerShips: state.player.ships, currentTurn: state.meta.currentTurn }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

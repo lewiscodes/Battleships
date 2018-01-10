@@ -1,6 +1,6 @@
 import { SET_WIDTH, SET_BLOCK_SIZE } from '../actions/meta';
 
-const INITIAL_STATE = { width: window.innerWidth, blockSize: (((window.innerWidth / 100) * 45) / 11) };
+const INITIAL_STATE = { width: window.innerWidth, blockSize: (((window.innerWidth / 100) * 45) / 11), currentTurn: null };
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {

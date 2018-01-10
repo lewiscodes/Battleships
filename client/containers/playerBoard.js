@@ -54,6 +54,14 @@ class PlayerBoard extends Component {
                 }
             };
 
+            // removes block from selectedBlocks if it is already used by another ship.
+            for (let x=0; x<selectedBlocks.length; x++ ) {
+                const selectedBlock = selectedBlocks[x];
+                if (this.props.board[selectedBlock].containsShip) {
+                    selectedBlocks.splice(x, 1);
+                }
+            }
+
             if (currentlyHoveredOverBlock === null) {
                 selectedBlocks = [];
             };
