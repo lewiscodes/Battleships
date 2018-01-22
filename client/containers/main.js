@@ -6,7 +6,7 @@ import PlayerBoard from './playerBoard';
 import ComputerBoard from './computerBoard';
 import Title from '../components/title/container'
 import Deck from '../components/deck/container'
-import { setWidth, setBlockSize } from '../actions/meta';
+import { setWidth, setBlockSize, setTurn } from '../actions/meta';
 import { initialiseComputerShips, computerMakeGuess } from '../actions/computer';
 
 require('./sass/main.scss');
@@ -20,7 +20,7 @@ class Main extends Component {
     }
 
     componentDidUpdate() {
-        const gameReady = _.find(this.props.playerShips, (ship) => {return !ship.placed});        
+        const gameReady = _.find(this.props.playerShips, (ship) => {return !ship.placed});
         // gameReady = undefined indicates that there are no ships left for the placer to place on the board.
         if (gameReady === undefined) {
             if (this.props.currentTurn === null) {
@@ -31,8 +31,8 @@ class Main extends Component {
                     // it is the computers turn
                     this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips);
                 } else {
-                    // itis the players turn.
-                    // display a notification indicating that it is the players go.
+                    // it is the players turn.
+                    this.props.setTurn('player');
                 }
             }
         }
@@ -41,12 +41,12 @@ class Main extends Component {
     initialiseFirstGo() {
         // 0 = computer, 1 = player
         let flipCoin = Math.floor( Math.random() * 2);
-        console.log(flipCoin);
-
         if (flipCoin === 0) {
+            // its the computers turn
             this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips);
         } else {
-            // display a notification indicating that it is the players go.
+            // its the players turn
+            this.props.setTurn('player');
         }
     }
 
@@ -71,7 +71,7 @@ class Main extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips, computerMakeGuess }, dispatch)
+    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips, computerMakeGuess, setTurn }, dispatch)
 }
 
 function mapStateToProps(state) {

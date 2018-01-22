@@ -34,11 +34,19 @@ class Block extends Component {
         }
     };
 
+    mouseClickEventHandler = () => {
+        if (this.props.type === 'player') {
+            this.props.placeShipAttempt();
+        } else if (this.props.type === 'computer') {
+            this.props.playerGuessAttempt(this.props.id);
+        }
+    };
+
     render () {
         const classes = cx({
             'block': true,
             [`block--style-${this.props.style}`]: this.props.style !== undefined,
-            'block--hover': this.state.hovering && this.props.type === "computer",
+            'block--hover': this.state.hovering && this.props.type === "computer" && this.props.hoverable,
             'block--containsShip': this.props.containsShip,
             'block--targeted': this.props.targeted && !this.props.containsShip,
             'block--targeted-hit': this.props.targeted && this.props.containsShip,
@@ -55,6 +63,7 @@ class Block extends Component {
                 styles={styles}
                 mouseEnterEventHandler={this.mouseEnterEventHandler}
                 mouseLeaveEventHandler={this.mouseLeaveEventHandler}
+                onClickEvent={this.mouseClickEventHandler}
                 text={textToDisplay}
                 {...this.props}
             />

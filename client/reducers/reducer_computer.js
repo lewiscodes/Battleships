@@ -1,4 +1,5 @@
 import { INIT_COMPUTER_SHIPS, ADD_SHIP, MAKE_GUESS } from '../actions/computer';
+import { PLAYER_MAKE_GUESS } from '../actions/player'
 
 const buildBoard = () => {
     let board = {};
@@ -24,14 +25,19 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case INIT_COMPUTER_SHIPS:
-        let newState = {...state.board};
+        let newState_InitComputerShips = {...state.board};
 
         // updates the empty board with the positions of the randomly generated computer ships.
         Object.getOwnPropertyNames(action.payload).map((objectKey) => {
-            newState[objectKey] = action.payload[objectKey]
+            newState_InitComputerShips[objectKey] = action.payload[objectKey]
         });
 
-        return {...state, board: newState};
+        return {...state, board: newState_InitComputerShips};
+    case PLAYER_MAKE_GUESS:
+        let newState_playerMakeGuess = {...state.board};
+        newState_playerMakeGuess[action.payload].targeted = true;
+
+        return {...state, board: newState_playerMakeGuess}
     default:
         return state;
   }

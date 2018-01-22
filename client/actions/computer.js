@@ -5,6 +5,7 @@ export const ADD_SHIP = "ADD_SHIP";
 export const MAKE_GUESS = "MAKE_GUESS";
 
 export function initialiseComputerShips(ships) {
+    let updatedShips = {...ships};
     let usedBlocks = {};
 
     // loops through each ship
@@ -14,8 +15,8 @@ export function initialiseComputerShips(ships) {
         // keeps trying until all of validation succeeds on a randomly generated ship position
         while (randomShipSuccessful === false) {
             randomShipSuccessful = true;
-            ships[x+1] = randomlyPlaceShip(ships[x+1].shipLength, ships);
-            const ship = ships[x+1];
+            updatedShips[x+1] = randomlyPlaceShip(updatedShips[x+1].shipLength, updatedShips);
+            const ship = updatedShips[x+1];
             const startingPosition = (ship.xAxis * 10) + ship.yAxis;
             let shipUsedBlocks = {};
 
