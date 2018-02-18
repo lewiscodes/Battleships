@@ -31,14 +31,13 @@ export default function(state = INITIAL_STATE, action) {
         newState_makeGuess_board[action.payload].targeted = true;
 
         const shipID = newState_makeGuess_board[action.payload].shipId;
-        console.log(shipID);
         
         if (shipID !== undefined) {
             newState_makeGuess_ships[shipID].numberOfHits++;
             newState_makeGuess_ships[shipID].hitBlocks.push(action.payload);
 
             if (newState_makeGuess_ships[shipID].numberOfHits === newState_makeGuess_ships[shipID].shipLength) {
-                newState_makeGuess_ships[shipID].sunk = false;
+                newState_makeGuess_ships[shipID].sunk = true;
             }
         }
         return {...state, board: newState_makeGuess_board, ships: newState_makeGuess_ships};
@@ -73,7 +72,7 @@ export default function(state = INITIAL_STATE, action) {
         let newState_placeShip_Ships = {...state.ships};
 
         for (let x=0; x<action.payload.shipBlocks.length; x++) {
-            newState_placeShip_Board[action.payload.shipBlocks[x]] = {id: action.payload.shipBlocks[x], containsShip: true, targeted: false};
+            newState_placeShip_Board[action.payload.shipBlocks[x]] = {id: action.payload.shipBlocks[x], containsShip: true, targeted: false, shipId: action.payload.shipId};
         }
         
         newState_placeShip_Ships[action.payload.shipId].placed = true;
