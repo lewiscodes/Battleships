@@ -103,7 +103,11 @@ export function computerMakeGuess(currentPlayerBoard, playersCurrentShips) {
             payload: guess
         });
 
-        dispatch(setTurn("player"));
+        if (!currentPlayerBoard[guess].containsShip) {
+            dispatch(setTurn("player"));
+        } else {
+            dispatch(setTurn("computer"));
+        }
     };
 }
 

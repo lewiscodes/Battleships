@@ -38,13 +38,15 @@ export function placeShip(shipId, shipBlocks) {
     };
 }
 
-export function playerMakeGuess(blockId) {
+export function playerMakeGuess(blockId, hit) {
     return (dispatch) => {
         dispatch({
             type: PLAYER_MAKE_GUESS,
             payload: blockId
         });
 
-        dispatch(setTurn('computer'));
+        if (!hit) {
+            dispatch(setTurn('computer'));
+        }
     };
 }
