@@ -9,8 +9,10 @@ require('./sass/computerBoard.scss');
 
 class ComputerBoard extends Component {
     guessAttempt = (blockId) => {
-        if (this.props.meta.currentTurn === 'player') {
-            this.props.playerMakeGuess(blockId);
+        if (!this.props.board[blockId].targeted) {
+            if (this.props.meta.currentTurn === 'player') {
+                this.props.playerMakeGuess(blockId);
+            }
         }
     }
 
