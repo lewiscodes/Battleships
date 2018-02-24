@@ -1,6 +1,7 @@
 export const SET_WIDTH = "SET_WIDTH";
 export const SET_BLOCK_SIZE = "SET_BLOCK_SIZE";
 export const SET_TURN = "SET_TURN";
+export const SET_TURN_NUMBER = "SET_TURN_NUMBER";
 
 export function setWidth() {
     return {
@@ -20,5 +21,14 @@ export function setTurn(turn) {
     return {
         type: SET_TURN,
         payload: turn
+    }
+}
+
+export function setTurnNumber(lastTurnNumber) {
+    lastTurnNumber++;
+    
+    return {
+        type: SET_TURN_NUMBER,
+        payload: lastTurnNumber
     }
 }

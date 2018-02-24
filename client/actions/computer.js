@@ -1,4 +1,4 @@
-import { setTurn } from './meta';
+import { setTurn, setTurnNumber } from './meta';
 
 export const INIT_COMPUTER_SHIPS = "INIT_COMPUTER_SHIPS";
 export const ADD_SHIP = "ADD_SHIP";
@@ -89,7 +89,7 @@ function randomlyPlaceShip(shipLength, ships) {
     }
 }
 
-export function computerMakeGuess(currentPlayerBoard, playersCurrentShips) {
+export function computerMakeGuess(currentPlayerBoard, playersCurrentShips, turnNumber) {
     return (dispatch) => {
         let guess = 0;
         if (hasAShipBeenHitButNotSunk(playersCurrentShips)) {
@@ -97,6 +97,8 @@ export function computerMakeGuess(currentPlayerBoard, playersCurrentShips) {
         } else {
             guess = makeNewGuess(currentPlayerBoard);
         }
+
+        dispatch(setTurnNumber(turnNumber));
 
         dispatch ({
             type: MAKE_GUESS,

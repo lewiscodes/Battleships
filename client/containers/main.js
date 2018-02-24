@@ -23,19 +23,32 @@ class Main extends Component {
         const gameReady = _.find(this.props.playerShips, (ship) => {return !ship.placed});
         // gameReady = undefined indicates that there are no ships left for the placer to place on the board.
         if (gameReady === undefined) {
-            if (this.props.currentTurn === null) {
+            if (this.gameIsWon()) {
+                console.log("the game has been won!");
+            } else if (this.props.currentTurn === null) {
                 // this kicks off the first turn of the game
                 this.initialiseFirstGo();
             } else {
                 if (this.props.currentTurn === 'computer') {
                     // it is the computers turn
-                    this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips);
+                    this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips, this.props.meta.turnNumber);
                 } else {
                     // it is the players turn.
-                    this.props.setTurn('player');
                 }
             }
         }
+    }
+
+    gameIsWon() {
+        // computer ships aren't being updated with hit and sunk!!!!!!!
+        const computerShipsLeft = _.filter(this.props.computerShips, (computerShip) => !computerShip.sunk)
+        const playerShipsLeft = _.filter(this.props.playerShips, (playerShip) => !playerShip.sunk)
+
+        if (!playerShipsLeft.length || !computerShipsLeft.length) {
+            return true;
+        }
+
+        return false;
     }
 
     initialiseFirstGo() {
@@ -43,7 +56,7 @@ class Main extends Component {
         let flipCoin = Math.floor( Math.random() * 2);
         if (flipCoin === 0) {
             // its the computers turn
-            this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips);
+            this.props.computerMakeGuess(this.props.playerBoard, this.props.playerShips, this.props.meta.turnNumber);
         } else {
             // its the players turn
             this.props.setTurn('player');
@@ -75,7 +88,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return { computerShips: state.computer.ships, playerBoard: state.player.board, playerShips: state.player.ships, currentTurn: state.meta.currentTurn }
+    return { computerShips: state.computer.ships, playerBoard: state.player.board, playerShips: state.player.ships, currentTurn: state.meta.currentTurn, meta: state.meta }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

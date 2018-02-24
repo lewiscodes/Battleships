@@ -35,7 +35,19 @@ export default function(state = INITIAL_STATE, action) {
         return {...state, board: newState_InitComputerShips};
     case PLAYER_MAKE_GUESS:
         let newState_playerMakeGuess = {...state.board};
+        let newState_makeGuess_ships = {...state.ships}
         newState_playerMakeGuess[action.payload].targeted = true;
+
+        const shipID = newState_playerMakeGuess[action.payload].shipID;
+        if (shipID !== undefined) {
+            newState_makeGuess_ships[shipID].numberOfHits++;
+            newState_makeGuess_ships[shipID].hitBlocks.push(action.payload);
+
+            if (newState_makeGuess_ships[shipID].numberOfHits === newState_makeGuess_ships[shipID].shipLength) {
+                newState_makeGuess_ships[shipID].sunk = true;
+            }
+        }
+        
 
         return {...state, board: newState_playerMakeGuess}
     default:

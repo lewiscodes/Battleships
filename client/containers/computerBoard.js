@@ -11,7 +11,7 @@ class ComputerBoard extends Component {
     guessAttempt = (blockId) => {
         if (!this.props.board[blockId].targeted) {
             if (this.props.meta.currentTurn === 'player') {
-                this.props.playerMakeGuess(blockId, this.props.board[blockId].containsShip);
+                this.props.playerMakeGuess(blockId, this.props.board[blockId].containsShip, this.props.meta.turnNumber);
             }
         }
     }

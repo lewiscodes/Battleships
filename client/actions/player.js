@@ -1,4 +1,4 @@
-import { setTurn } from '../actions/meta'
+import { setTurn, setTurnNumber } from '../actions/meta'
 
 export const SELECT_SHIP = "SELECT_SHIP";
 export const TOGGLE_SHIP_ROTATION = "TOGGLE_SHIP_ROTATION";
@@ -38,15 +38,19 @@ export function placeShip(shipId, shipBlocks) {
     };
 }
 
-export function playerMakeGuess(blockId, hit) {
+export function playerMakeGuess(blockId, hit, turnNumber) {
     return (dispatch) => {
         dispatch({
             type: PLAYER_MAKE_GUESS,
             payload: blockId
         });
 
+        dispatch(setTurnNumber(turnNumber));
+
         if (!hit) {
             dispatch(setTurn('computer'));
+        } else {
+            dispatch(setTurn('player'));
         }
     };
 }
