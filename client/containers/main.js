@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import PlayerBoard from './playerBoard';
 import ComputerBoard from './computerBoard';
+import Ticker from './ticker';
 import Title from '../components/title/container'
 import Deck from '../components/deck/container'
-import { setWidth, setBlockSize, setTurn } from '../actions/meta';
+import { setWidth, setBlockSize, setTurn, addTextToTicker } from '../actions/meta';
 import { initialiseComputerShips, computerMakeGuess } from '../actions/computer';
 
 require('./sass/main.scss');
@@ -17,6 +18,7 @@ class Main extends Component {
         window.addEventListener('resize', this.props.setWidth.bind(this));
         window.addEventListener('resize', this.props.setBlockSize.bind(this));
         this.props.initialiseComputerShips(this.props.computerShips);
+        this.props.addTextToTicker("Please place your ships on the board.", this.props.meta.ticker.length);
     }
 
     componentDidUpdate() {
@@ -67,6 +69,7 @@ class Main extends Component {
         return (
             <div className={"main"}>
                 <Title text={"Battleships"} type={"header"} />
+                <Ticker />
                 <div className={"boardContainer"}>
                     <div className={"player"}>
                         <Title text={"Player"} type={"subheader"} />
@@ -84,7 +87,7 @@ class Main extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips, computerMakeGuess, setTurn }, dispatch)
+    return bindActionCreators({ setWidth, setBlockSize, initialiseComputerShips, computerMakeGuess, setTurn, addTextToTicker }, dispatch)
 }
 
 function mapStateToProps(state) {
